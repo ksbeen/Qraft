@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 // axios를 사용하기 위해 불러옵니다.
-import axios from 'axios';
+import apiClient from '../api/apiClient';
 
 function SignUpPage() {
   const [email, setEmail] = useState('');
@@ -19,7 +19,7 @@ function SignUpPage() {
     try {
       // axios.post를 사용하여 백엔드 API에 POST 요청을 보냅니다.
       // 첫 번째 인자는 API 주소, 두 번째 인자는 전송할 데이터(JSON)입니다.
-      const response = await axios.post('http://localhost:8080/api/users/signup', formData);
+      const response = await apiClient.post('/api/users/signup', formData);
 
       // 요청이 성공하면, 서버로부터 받은 응답을 콘솔에 출력하고 알림창을 띄웁니다.
       console.log('성공:', response.data);

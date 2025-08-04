@@ -1,5 +1,6 @@
 package com.example.Qraft.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ public class UserService {
     // final 키워드를 사용하여 UserRepository의 의존성을 주입(DI)받습니다.
     // 이 Service 클래스는 이제 UserRepository의 메소드들을 사용할 수 있습니다.
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder; // 암호화 도구 주입
 
     /**
      * 회원가입 기능을 처리하는 메소드
@@ -30,12 +32,11 @@ public class UserService {
     @Transactional
     public User signup(String email, String password, String nickname) {
         
-        // TODO: 비밀번호 암호화 기능은 나중에 Spring Security를 도입하면서 추가할 예정입니다.
         
         // 위에서 추가한 @Builder를 사용하여 User 객체를 생성합니다.
         User newUser = User.builder()
                 .email(email)
-                .password(password) // 현재는 비밀번호를 그대로 저장
+                .password(passwordEncoder.encode(password)) // 비밀번호를 암호화하여 저장합니다.
                 .nickname(nickname)
                 .build();
 

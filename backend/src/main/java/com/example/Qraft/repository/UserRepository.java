@@ -1,5 +1,6 @@
 package com.example.Qraft.repository;
 
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // - findById(Long id): id로 유저 찾기 (SELECT)
     // - findAll(): 모든 유저 찾기 (SELECT)
     // - deleteById(Long id): id로 유저 삭제 (DELETE)
-    //
-    // 따라서 이 안에는 아무것도 코드를 작성할 필요가 없습니다.
+
+    
+    // findByEmail: 이메일을 기준으로 사용자를 찾는 메소드입니다.
+    // Spring Data JPA가 메소드 이름을 분석해서 자동으로 SQL 쿼리를 만들어줍니다.
+    // Optional<User>는 사용자가 존재할 수도, 존재하지 않을 수도 있다는 것을 나타냅니다.
+    Optional<User> findByEmail(String email);
 }

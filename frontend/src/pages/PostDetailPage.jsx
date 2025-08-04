@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 // useNavigate를 추가로 불러옵니다.
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import apiClient from '../api/apiClient';
 
 function PostDetailPage() {
   const { id } = useParams();
@@ -16,7 +16,7 @@ function PostDetailPage() {
     // ... 기존 fetchPost 함수는 그대로 ...
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/posts/${id}`);
+        const response = await apiClient.get(`/api/posts/${id}`); 
         setPost(response.data);
       } catch (error) {
         console.error('게시글을 불러오는 데 실패했습니다:', error);
@@ -34,7 +34,7 @@ function PostDetailPage() {
     if (window.confirm('정말 이 게시글을 삭제하시겠습니까?')) {
       try {
         // 백엔드의 게시글 삭제 API를 호출합니다.
-        await axios.delete(`http://localhost:8080/api/posts/${id}`);
+        await apiClient.delete(`/api/posts/${id}`);
         alert('게시글이 성공적으로 삭제되었습니다.');
         // 삭제 성공 후, 게시판 목록 페이지로 이동합니다.
         navigate('/posts');

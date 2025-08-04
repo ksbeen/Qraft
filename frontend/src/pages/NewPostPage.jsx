@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 useNavigate
-import axios from 'axios';
+import apiClient from '../api/apiClient';
 
 function NewPostPage() {
   // 폼 입력을 위한 state
@@ -26,7 +26,7 @@ function NewPostPage() {
 
     try {
       // 게시글 생성 API 호출
-      const response = await axios.post('http://localhost:8080/api/posts', requestData);
+      const response = await apiClient.post('/api/posts', requestData);
       console.log('게시글 생성 성공:', response.data);
       alert('게시글이 성공적으로 등록되었습니다.');
 

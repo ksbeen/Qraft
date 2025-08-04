@@ -1,7 +1,7 @@
 // PostListPage.jsx
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import apiClient from '../api/apiClient';
 import { Link } from 'react-router-dom'; // Link를 react-router-dom에서 불러옵니다.
 
 function PostListPage() {
@@ -10,7 +10,7 @@ function PostListPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/posts');
+        const response = await apiClient.get('/api/posts');
         setPosts(response.data);
       } catch (error) {
         console.error('게시글 목록을 불러오는 데 실패했습니다:', error);

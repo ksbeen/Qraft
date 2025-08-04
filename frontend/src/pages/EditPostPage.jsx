@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import apiClient from '../api/apiClient';
 
 function EditPostPage() {
   // URL에서 수정할 게시글의 id를 가져옵니다.
@@ -19,7 +19,7 @@ function EditPostPage() {
     const fetchPost = async () => {
       try {
         // id를 사용하여 특정 게시글을 조회하는 API를 호출합니다.
-        const response = await axios.get(`http://localhost:8080/api/posts/${id}`);
+        const response = await apiClient.get(`/api/posts/${id}`);
         // 응답으로 받은 기존 데이터를 state에 저장하여 폼에 보여줍니다.
         setTitle(response.data.title);
         setContent(response.data.content);
@@ -38,7 +38,7 @@ function EditPostPage() {
 
     try {
       // 수정 API를 호출합니다. (PUT 요청)
-      await axios.put(`http://localhost:8080/api/posts/${id}`, updatedData);
+      await apiClient.put(`/api/posts/${id}`, updatedData);
       alert('게시글이 성공적으로 수정되었습니다.');
       // 수정 성공 후, 해당 게시글의 상세 페이지로 이동합니다.
       navigate(`/posts/${id}`);

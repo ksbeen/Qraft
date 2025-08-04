@@ -11,6 +11,7 @@ import com.example.Qraft.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
+import jakarta.validation.Valid;
 // @RestController: 이 클래스가 RESTful 웹 서비스의 컨트롤러임을 나타냅니다.
 // 이 어노테이션이 붙은 클래스의 메소드들은 기본적으로 JSON 형태로 데이터를 반환합니다.
 @RestController
@@ -29,7 +30,7 @@ public class UserController {
     @PostMapping("/signup")
     // @RequestBody: 클라이언트가 보낸 JSON 형식의 요청 본문(body)을
     // UserSignUpRequestDto 객체로 자동으로 변환해줍니다.
-    public ResponseEntity<String> signup(@RequestBody UserSignUpRequestDto requestDto) {
+    public ResponseEntity<String> signup(@Valid @RequestBody UserSignUpRequestDto requestDto) {
         
         // DTO에서 받은 데이터를 사용하여 UserService의 signup 메소드를 호출합니다.
         userService.signup(
