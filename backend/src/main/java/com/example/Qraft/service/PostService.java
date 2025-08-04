@@ -34,12 +34,12 @@ public class PostService {
      * @return 저장된 Post 객체
      */
     @Transactional
-    public Post create(Long userId, PostCreateRequestDto requestDto) {
-        
-        // 1. userId를 사용하여 작성자(User) 정보를 데이터베이스에서 조회합니다.
-        // 만약 해당 ID의 유저가 없으면, Exception을 발생시켜 작업을 중단합니다.
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다. id=" + userId));
+    public Post create(String userEmail, PostCreateRequestDto requestDto) {
+
+        // 1. userEmail을 사용하여 작성자(User) 정보를 데이터베이스에서 조회합니다.
+        // 만약 해당 이메일의 유저가 없으면, Exception을 발생시켜 작업을 중단합니다.
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다. email=" + userEmail));
 
         // 2. DTO와 조회된 User 객체를 사용하여 새로운 Post 객체를 생성합니다.
         Post newPost = Post.builder()

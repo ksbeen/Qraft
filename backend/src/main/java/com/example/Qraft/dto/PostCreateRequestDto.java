@@ -8,8 +8,6 @@ import lombok.Getter;
 @Getter
 public class PostCreateRequestDto {
 
-    // 서버가 누가 게시글을 썼는지
-    private Long userId;
 
     // 클라이언트로부터 받을 게시글 제목
     private String title;

@@ -16,9 +16,7 @@ function NewPostPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // TODO: 로그인 기능 구현 후, 실제 로그인된 사용자의 ID를 사용해야 합니다.
     const requestData = {
-      userId: 1, // 지금은 임시로 1번 유저가 작성한다고 가정
       title,
       content,
       boardType: 'FREE', // '자유'게시판으로 고정

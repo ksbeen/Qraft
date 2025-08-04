@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping; 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.example.Qraft.dto.PostCreateRequestDto;
 import com.example.Qraft.service.PostService;
@@ -32,8 +34,12 @@ public class PostController {
     @PostMapping
     public ResponseEntity<String> createPost(@RequestBody PostCreateRequestDto requestDto) {
 
+        // SecurityContextHolder에서 직접 현재 사용자의 인증 정보를 가져옵니다.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // 인증 정보에서 사용자의 이메일을 가져옵니다.
+        String userEmail = authentication.getName();
         // DTO에서 받은 데이터를 사용하여 PostService의 create 메소드를 호출합니다.
-        postService.create(requestDto.getUserId(), requestDto);
+        postService.create(userEmail, requestDto);
 
         // 게시글 생성이 성공하면, 성공 메시지를 담은 응답을 반환합니다.
         return ResponseEntity.ok("게시글이 성공적으로 등록되었습니다.");

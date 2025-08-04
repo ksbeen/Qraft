@@ -6,40 +6,55 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Qraft.dto.LoginRequestDto;
+import com.example.Qraft.dto.TokenDto;
 import com.example.Qraft.dto.UserSignUpRequestDto;
 import com.example.Qraft.service.UserService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-import jakarta.validation.Valid;
-// @RestController: 이 클래스가 RESTful 웹 서비스의 컨트롤러임을 나타냅니다.
-// 이 어노테이션이 붙은 클래스의 메소드들은 기본적으로 JSON 형태로 데이터를 반환합니다.
+/**
+ * @RestController: 이 클래스가 REST API의 요청을 처리하는 컨트롤러임을 나타냅니다.
+ * 각 메소드의 반환 값은 자동으로 JSON 형태로 변환되어 HTTP 응답 본문에 담깁니다.
+ * @RequestMapping("/api/users"): 이 컨트롤러 내의 모든 API는 '/api/users' 라는 공통된 URL 경로를 가집니다.
+ * @RequiredArgsConstructor: final 필드에 대한 생성자 주입을 자동으로 처리해줍니다.
+ */
 @RestController
-// @RequestMapping: 이 컨트롤러의 모든 메소드에 대한 공통 URL 경로를 설정합니다.
-// 즉, 이 컨트롤러의 모든 API 주소는 '/api/users'로 시작합니다.
 @RequestMapping("/api/users")
-// @RequiredArgsConstructor: final로 선언된 필드를 인자로 받는 생성자를 자동으로 생성합니다. (의존성 주입)
 @RequiredArgsConstructor
 public class UserController {
 
-    // final 키워드를 사용하여 UserService의 의존성을 주입(DI)받습니다.
+    // 비즈니스 로직을 처리하는 UserService를 주입받습니다.
     private final UserService userService;
 
-    // @PostMapping: HTTP POST 요청을 처리하는 메소드임을 나타냅니다.
-    // '/signup' 경로와 매핑되므로, 최종 URL은 '/api/users/signup'이 됩니다.
+    /**
+     * 회원가입 API (/api/users/signup)
+     * @param requestDto 클라이언트가 보낸 회원가입 정보를 담은 DTO
+     * @return 성공 메시지 문자열
+     */
     @PostMapping("/signup")
-    // @RequestBody: 클라이언트가 보낸 JSON 형식의 요청 본문(body)을
-    // UserSignUpRequestDto 객체로 자동으로 변환해줍니다.
     public ResponseEntity<String> signup(@Valid @RequestBody UserSignUpRequestDto requestDto) {
-        
-        // DTO에서 받은 데이터를 사용하여 UserService의 signup 메소드를 호출합니다.
+        // UserService의 signup 메소드를 호출하여 회원가입 로직을 수행합니다.
         userService.signup(
             requestDto.getEmail(),
             requestDto.getPassword(),
             requestDto.getNickname()
         );
-
-        // 회원가입이 성공하면, HTTP 상태 코드 200(OK)와 함께 성공 메시지를 담은 응답을 반환합니다.
+        // 성공 시, HTTP 상태 코드 200(OK)와 함께 성공 메시지를 응답으로 보냅니다.
         return ResponseEntity.ok("회원가입이 성공적으로 완료되었습니다.");
+    }
+
+    /**
+     * 로그인 API (/api/users/login)
+     * @param requestDto 클라이언트가 보낸 로그인 정보를 담은 DTO (이메일, 비밀번호)
+     * @return 로그인 성공 시 발급된 JWT를 담은 DTO
+     */
+    @PostMapping("/login")
+    public ResponseEntity<TokenDto> login(@RequestBody LoginRequestDto requestDto) {
+        // 1. UserService의 login 메소드를 호출하여 JWT 문자열을 받습니다.
+        String token = userService.login(requestDto);
+        // 2. 받은 JWT를 TokenDto로 감싸서 HTTP 응답 본문에 담아 보냅니다.
+        return ResponseEntity.ok(new TokenDto(token));
     }
 }
