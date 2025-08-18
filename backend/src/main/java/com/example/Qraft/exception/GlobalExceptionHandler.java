@@ -1,34 +1,50 @@
 package com.example.Qraft.exception;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-// @RestControllerAdvice: 모든 @RestController에서 발생하는 예외를
-// 이 클래스에서 처리하도록 지정합니다.
+/**
+ * @RestControllerAdvice: 모든 컨트롤러(@RestController)에서 발생하는 예외(Exception)를
+ * 전역적으로 잡아서 처리하는 클래스임을 나타냅니다.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // @ExceptionHandler: 특정 예외(Exception)를 잡아서 처리할 메소드를 지정합니다.
-    // 여기서는 IllegalArgumentException이 발생하면 이 메소드가 실행됩니다.
+    /**
+     * @ExceptionHandler(IllegalArgumentException.class):
+     * Service 계층에서 데이터가 존재하지 않는 등 비즈니스 로직 상의 예외가 발생했을 때 이 메소드가 실행됩니다.
+     * @return 404 Not Found 상태 코드와 예외 메시지를 응답으로 보냅니다.
+     */
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
-
-        // 예외가 발생하면, HTTP 상태 코드 404 (Not Found)와 함께
-        // 예외 메시지("해당 게시글을 찾을 수 없습니다...")를 응답 본문에 담아 반환합니다.
         return ResponseEntity.status(404).body(ex.getMessage());
     }
 
+    /**
+     * @ExceptionHandler(MethodArgumentNotValidException.class):
+     * DTO에 @Valid 어노테이션으로 설정한 유효성 검증에 실패했을 때 이 메소드가 실행됩니다.
+     * @return 400 Bad Request 상태 코드와 DTO에 설정된 메시지를 응답으로 보냅니다.
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        // 검증 실패 시, DTO에 설정된 default message를 응답 본문에 담아 반환합니다.
         String errorMessage = ex.getBindingResult()
                                 .getAllErrors()
                                 .get(0)
                                 .getDefaultMessage();
         
-        // 400 Bad Request 상태 코드와 함께 에러 메시지를 반환합니다.
         return ResponseEntity.status(400).body(errorMessage);
+    }
+    
+    /**
+     * @ExceptionHandler(AccessDeniedException.class):
+     * Service 계층에서 권한(Authorization) 검사에 실패했을 때 이 메소드가 실행됩니다.
+     * @return 403 Forbidden 상태 코드와 예외 메시지를 응답으로 보냅니다.
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException ex) {
+        return ResponseEntity.status(403).body(ex.getMessage());
     }
 }
