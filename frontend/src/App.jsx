@@ -9,6 +9,7 @@ import EditPostPage from './pages/EditPostPage';
 import InterviewLobbyPage from './pages/InterviewLobbyPage';
 import InterviewSessionPage from './pages/InterviewSessionPage';
 import MyPracticeLogsPage from './pages/MyPracticeLogsPage';
+import PracticeLogDetailPage from './pages/PracticeLogDetailPage';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/interview" element={<InterviewLobbyPage />} />
         <Route path="/interview/:id" element={<InterviewSessionPage />} />
         <Route path="/my-logs" element={<MyPracticeLogsPage />} />
+        <Route path="/practice-logs/:id" element={<PracticeLogDetailPage />} />
       </Routes>
     </div>
   );

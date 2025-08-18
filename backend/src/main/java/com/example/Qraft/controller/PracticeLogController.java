@@ -3,6 +3,7 @@ package com.example.Qraft.controller;
 import com.example.Qraft.dto.PracticeLogRequestDto;
 import com.example.Qraft.service.PracticeLogService;
 import com.example.Qraft.dto.PracticeLogResponseDto;
+import com.example.Qraft.dto.PracticeLogDetailResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -52,5 +54,15 @@ public class PracticeLogController {
 
         List<PracticeLogResponseDto> myLogs = practiceLogService.findMyLogs(userEmail);
         return ResponseEntity.ok(myLogs);
+    }
+    /**
+     * ID로 특정 면접 기록을 조회하는 API
+     * @param id URL 경로에서 추출한 면접 기록 ID
+     * @return 면접 기록 상세 정보 DTO
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<PracticeLogDetailResponseDto> getLogById(@PathVariable Long id) {
+        PracticeLogDetailResponseDto logDetail = practiceLogService.findLogById(id);
+        return ResponseEntity.ok(logDetail);
     }
 }

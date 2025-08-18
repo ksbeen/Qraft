@@ -55,6 +55,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
             // OPTIONS 메소드에 대한 요청은 인증 없이 모두 허용합니다. (Preflight 요청 처리)
             .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            // '/uploads/' 경로의 모든 GET 요청은 인증 없이 허용합니다.
+            .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
             // '/api/users/signup' 과 '/api/users/login' 경로는 인증 없이 접근을 허용합니다.
             .requestMatchers("/api/users/signup", "/api/users/login").permitAll()
             // 그 외의 모든 요청은 반드시 인증(로그인)을 거쳐야 합니다.

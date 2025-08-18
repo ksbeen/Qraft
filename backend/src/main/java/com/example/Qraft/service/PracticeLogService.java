@@ -7,7 +7,8 @@ import com.example.Qraft.entity.User;
 import com.example.Qraft.repository.InterviewSetRepository;
 import com.example.Qraft.repository.PracticeLogRepository;
 import com.example.Qraft.repository.UserRepository;
-import com.example.Qraft.dto.PracticeLogResponseDto; 
+import com.example.Qraft.dto.PracticeLogResponseDto;
+import com.example.Qraft.dto.PracticeLogDetailResponseDto; 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,5 +64,18 @@ public class PracticeLogService {
                 .stream()
                 .map(PracticeLogResponseDto::new)
                 .collect(Collectors.toList());
+    }
+    /**
+     * ID로 특정 면접 기록을 조회하는 메소드
+     * @param logId 조회할 면접 기록의 ID
+     * @return 면접 기록 상세 정보 DTO
+     */
+    @Transactional(readOnly = true)
+    public PracticeLogDetailResponseDto findLogById(Long logId) {
+        // ID로 Practice_Log 엔티티를 찾고, 없으면 예외를 발생시킵니다.
+        return practiceLogRepository.findById(logId)
+                // 찾은 엔티티를 DTO로 변환하여 반환합니다.
+                .map(PracticeLogDetailResponseDto::new)
+                .orElseThrow(() -> new IllegalArgumentException("해당 면접 기록을 찾을 수 없습니다. id=" + logId));
     }
 }
