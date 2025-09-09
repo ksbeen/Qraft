@@ -1,0 +1,111 @@
+/* src/styles/Interview.css */
+
+/* 면접 로비 & 내 기록 페이지 카드 스타일 */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.interview-card {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  height: 100%;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.interview-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.interview-card-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.interview-card-meta {
+  color: var(--text-secondary-color);
+  font-size: 0.9rem;
+}
+
+/* 면접 세션 페이지 스타일 */
+.session-container {
+  max-width: 800px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.session-video {
+  width: 100%;
+  background-color: black;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.question-box {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+.question-number {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.question-content {
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+.session-actions button {
+  padding: 10px 25px;
+  font-size: 1rem;
+  margin: 0 10px;
+  border-radius: 4px;
+  border: 1px solid var(--primary-color);
+  cursor: pointer;
+}
+
+.session-actions .primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.session-actions .secondary {
+  background-color: white;
+  color: var(--primary-color);
+}
+
+/* 상세 기록 페이지 스타일 */
+.log-detail-container {
+  background-color: white;
+  padding: 30px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.feedback-section {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border-color);
+}
+
+.feedback-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.feedback-list li {
+  padding: 15px;
+  border-bottom: 1px solid var(--border-color);
+}

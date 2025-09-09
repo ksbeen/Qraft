@@ -1,0 +1,99 @@
+/* src/styles/Post.css */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #333;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.write-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.write-button:hover {
+  background-color: #005cb3;
+}
+
+.post-card {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 20px;
+  transition: box-shadow 0.2s;
+}
+
+.post-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.post-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.post-card-author {
+  color: var(--text-secondary-color);
+}
+
+/* 상세 페이지 스타일 */
+.post-detail-header {
+  margin-bottom: 20px;
+}
+
+.post-detail-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.post-detail-meta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-secondary-color);
+  margin-bottom: 20px;
+}
+
+.post-detail-actions {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.action-button {
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.action-button.delete {
+  border-color: #d32f2f;
+  color: #d32f2f;
+}
+
+.post-detail-content {
+  padding-top: 30px;
+  border-top: 1px solid var(--border-color);
+  min-height: 200px;
+  line-height: 1.7;
+  font-size: 1.1rem;
+  white-space: pre-wrap; /* 줄바꿈과 공백 유지 */
+}

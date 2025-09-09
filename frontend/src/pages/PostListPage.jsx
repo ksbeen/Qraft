@@ -1,8 +1,7 @@
-// PostListPage.jsx
-
+// src/pages/PostListPage.jsx
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import apiClient from '../api/apiClient';
-import { Link } from 'react-router-dom'; // Link를 react-router-dom에서 불러옵니다.
 
 function PostListPage() {
   const [posts, setPosts] = useState([]);
@@ -16,32 +15,28 @@ function PostListPage() {
         console.error('게시글 목록을 불러오는 데 실패했습니다:', error);
       }
     };
-
     fetchPosts();
   }, []);
 
   return (
     <div>
-      <h2>게시판</h2>
-      <Link to="/posts/new">
-        <button>글쓰기</button>
-      </Link>
+      <div className="page-header">
+        <h1 className="page-title">커뮤니티</h1>
+        <Link to="/posts/new">
+          <button className="write-button">글쓰기</button>
+        </Link>
+      </div>
       <div>
         {posts.map((post) => (
-          // ▼▼▼▼▼ 이 부분을 수정합니다 ▼▼▼▼▼
-          // 각 게시글을 Link 컴포넌트로 감싸줍니다.
-          // to={`/posts/${post.id}`}는 '/posts/1', '/posts/2' 와 같은 경로를 만들어줍니다.
-          <Link key={post.id} to={`/posts/${post.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
-              <h3>{post.title}</h3>
-              <p>작성자: {post.authorNickname}</p>
+          <Link key={post.id} to={`/posts/${post.id}`}>
+            <div className="post-card">
+              <h3 className="post-card-title">{post.title}</h3>
+              <p className="post-card-author">작성자: {post.authorNickname}</p>
             </div>
           </Link>
-          // ▲▲▲▲▲ 이 부분을 수정합니다 ▲▲▲▲▲
         ))}
       </div>
     </div>
   );
 }
-
 export default PostListPage;

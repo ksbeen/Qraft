@@ -1,35 +1,20 @@
-// NewPostPage.jsx
-
+// src/pages/NewPostPage.jsx
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 useNavigate
+import { useNavigate } from 'react-router-dom';
 import apiClient from '../api/apiClient';
 
 function NewPostPage() {
-  // 폼 입력을 위한 state
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-
-  // 페이지 이동을 위한 navigate 함수
   const navigate = useNavigate();
 
-  // 폼 제출 시 실행될 함수
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const requestData = {
-      title,
-      content,
-      boardType: 'FREE', // '자유'게시판으로 고정
-    };
-
+    const requestData = { title, content, boardType: 'FREE' };
     try {
-      // 게시글 생성 API 호출
-      const response = await apiClient.post('/api/posts', requestData);
-      console.log('게시글 생성 성공:', response.data);
+      await apiClient.post('/api/posts', requestData);
       alert('게시글이 성공적으로 등록되었습니다.');
-
-      // 게시글 생성 성공 후, 게시판 목록 페이지로 이동
-      navigate('/posts'); 
+      navigate('/posts');
     } catch (error) {
       console.error('게시글 생성 실패:', error);
       alert('게시글 생성에 실패했습니다.');
@@ -37,29 +22,20 @@ function NewPostPage() {
   };
 
   return (
-    <div>
-      <h2>새 게시글 작성</h2>
+    <div className="form-container" style={{maxWidth: '800px'}}>
+      <h2 className="form-title">새 게시글 작성</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>제목</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+        <div className="form-group">
+          <label htmlFor="title">제목</label>
+          <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
         </div>
-        <div>
-          <label>내용</label>
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            rows="10"
-          />
+        <div className="form-group">
+          <label htmlFor="content">내용</label>
+          <textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} rows="15" required />
         </div>
-        <button type="submit">등록</button>
+        <button type="submit" className="form-button">등록</button>
       </form>
     </div>
   );
 }
-
 export default NewPostPage;

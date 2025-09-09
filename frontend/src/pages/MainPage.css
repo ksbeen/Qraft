@@ -1,0 +1,102 @@
+/* src/pages/MainPage.css */
+.main-page-container {
+  width: 100%;
+}
+
+.search-section {
+  background-color: #e9f4ff; /* 연한 파란색 배경 */
+  padding: 40px 20px;
+  border-radius: 8px;
+  margin-bottom: 40px;
+}
+
+.search-box {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  background-color: white;
+  border: 2px solid var(--primary-color);
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.search-dropdown {
+  border: none;
+  padding: 0 15px;
+  background-color: transparent;
+  font-size: 1rem;
+  color: #555;
+}
+
+.search-input {
+  flex-grow: 1;
+  border: none;
+  padding: 15px;
+  font-size: 1rem;
+}
+.search-input:focus {
+  outline: none;
+}
+
+.search-button {
+  background-color: var(--primary-color);
+  border: none;
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.quick-links {
+  max-width: 700px;
+  margin: 15px auto 0;
+  color: var(--text-secondary-color);
+  font-size: 0.9rem;
+}
+
+.quick-links a {
+  margin-left: 10px;
+  color: var(--text-secondary-color);
+}
+.quick-links a:hover {
+  text-decoration: underline;
+}
+
+
+.services-section {
+  margin-top: 50px;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 20px;
+}
+
+.service-card {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.service-icon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.service-title {
+  font-weight: 500;
+}

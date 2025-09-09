@@ -1,0 +1,46 @@
+/* src/components/NavBar.css */
+.navbar-header {
+  background-color: white;
+  border-bottom: 1px solid var(--border-color);
+  width: 100%;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 60px;
+  padding: 0 20px;
+}
+
+.navbar-brand {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.navbar-links {
+  margin-left: 50px;
+  flex-grow: 1;
+}
+
+.navbar-links a {
+  margin: 0 20px;
+  text-decoration: none;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.navbar-links a:hover {
+  color: var(--primary-color);
+}
+
+.navbar-auth a {
+  margin-left: 15px;
+  font-size: 0.9rem;
+  color: #555;
+  text-decoration: none;
+}
