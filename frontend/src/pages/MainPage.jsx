@@ -1,56 +1,109 @@
-// src/pages/MainPage.jsx
-import React from 'react';
-import './MainPage.css'; // MainPage를 위한 CSS 파일
-
-// 아이콘 데이터 (나중에 DB에서 불러오거나 더 동적으로 만들 수 있습니다)
-const services = [
-  { icon: '🎥', title: '면접 연습 시작' },
-  { icon: '💬', title: '내 답변 보기' },
-  { icon: '📋', title: '질문 목록 보기' },
-  { icon: '✍️', title: '커뮤니티 글쓰기' },
-  { icon: '📊', title: '나의 학습 통계' },
-  { icon: '⭐', title: '즐겨찾는 질문' },
-  { icon: '🎁', title: '추천 질문 받기' },
-];
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Header from '../components/Header';
+import Navigation from '../components/Navigation';
+import { useAuth } from '../contexts/AuthContext';
+import './MainPage.css';
 
 function MainPage() {
-  return (
-    <div className="main-page-container">
-      {/* --- 상단 검색 영역 --- */}
-      <section className="search-section">
-        <div className="search-box">
-          <select className="search-dropdown">
-            <option>전체</option>
-          </select>
-          <input type="text" className="search-input" placeholder="필요한 서비스를 찾아보세요" />
-          <button className="search-button">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M21 21L16.65 16.65" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-        </div>
-        <div className="quick-links">
-          <strong>추천검색어:</strong>
-          <a href="#">면접 질문</a>
-          <a href="#">면접 연습</a>
-          <a href="#">커뮤니티</a>
-          <a href="#">면접 후기</a>
-        </div>
-      </section>
+  const { isLoggedIn, login } = useAuth();
+  const [loginData, setLoginData] = useState({
+    username: '',
+    password: ''
+  });
 
-      {/* --- 하단 서비스 바로 가기 영역 --- */}
-      <section className="services-section">
-        <h2 className="section-title">자주찾는 서비스</h2>
-        <div className="service-grid">
-          {services.map((service, index) => (
-            <div key={index} className="service-card">
-              <div className="service-icon">{service.icon}</div>
-              <div className="service-title">{service.title}</div>
-            </div>
-          ))}
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const success = login(loginData.username, loginData.password);
+    if (success) {
+      setLoginData({ username: '', password: '' });
+    }
+  };
+
+  const renderWelcomeContent = () => (
+    <div className="content-box">
+      <div className="box-header">
+        <span>✅</span>
+        <span>로그인 완료</span>
+      </div>
+      
+      <div className="welcome-container">
+        <h2 className="welcome-title">
+          환영합니다!
+        </h2>
+        <p className="welcome-text">
+          Qraft의 다양한 기능을 이용해보세요.
+        </p>
+        
+        <div className="action-buttons">
+          <Link to="/posts" className="action-button">
+            📝 게시판 보기
+          </Link>
+          <Link to="/interview" className="action-button">
+            🎤 면접 연습
+          </Link>
         </div>
-      </section>
+      </div>
+    </div>
+  );
+
+  const renderLoginForm = () => (
+    <div className="content-box">
+      <div className="box-header">
+        <span>👤</span>
+        <span>게시판 로그인</span>
+      </div>
+      
+      <form onSubmit={handleLogin} className="login-form">
+        <input 
+          type="text" 
+          name="username"
+          placeholder="아이디" 
+          value={loginData.username}
+          onChange={handleInputChange}
+          className="login-input"
+          required
+        />
+        <input 
+          type="password" 
+          name="password"
+          placeholder="비밀번호" 
+          value={loginData.password}
+          onChange={handleInputChange}
+          className="login-input"
+          required
+        />
+        <button type="submit" className="login-button">
+          로그인
+        </button>
+      </form>
+      
+      <div className="login-links">
+        <Link to="/signup">회원가입</Link>
+        <span style={{ color: '#9ca3af' }}>|</span>
+        <Link to="/find-password">비밀번호 찾기</Link>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="main-page">
+      <Header />
+      <Navigation />
+      
+      <div className="main-container">
+        <div className="sidebar">
+          {isLoggedIn ? renderWelcomeContent() : renderLoginForm()}
+        </div>
+      </div>
     </div>
   );
 }

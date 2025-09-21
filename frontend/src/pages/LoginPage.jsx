@@ -16,7 +16,8 @@ function LoginPage() {
       const token = response.data.token;
       localStorage.setItem('authToken', token);
       alert('로그인에 성공했습니다.');
-      navigate('/');
+      // 페이지 새로고침으로 NavBar 상태 업데이트
+      window.location.href = '/';
     } catch (error) {
       console.error('로그인 실패:', error);
       alert('이메일 또는 비밀번호를 확인해주세요.');

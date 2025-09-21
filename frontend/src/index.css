@@ -1,9 +1,12 @@
 /* src/index.css */
 :root {
-  --primary-color: #0073e6; /* 사이트의 메인 파란색 */
-  --border-color: #e0e0e0;
-  --background-color: #f5f7fa;
-  --text-color: #333;
+  --primary-color: #4A90E2; /* 메인 하늘색 */
+  --secondary-color: #87CEEB; /* 연한 하늘색 */
+  --accent-color: #5DADE2; /* 강조 하늘색 */
+  --border-color: #E8F4FD;
+  --background-color: #F8FCFF;
+  --text-color: #2C3E50;
+  --text-secondary-color: #7F8C8D;
 }
 
 /* 모든 요소의 기본 여백 등을 초기화합니다. */
@@ -19,4 +22,23 @@ body {
     sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* 스크롤바 스타일링 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
 }

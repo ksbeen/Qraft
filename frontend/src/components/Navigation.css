@@ -1,0 +1,200 @@
+.navigation {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+/* 햄버거 메뉴 */
+.menu-toggle {
+  margin-right: 20px;
+  position: relative;
+}
+
+.hamburger-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hamburger-line {
+  width: 18px;
+  height: 2px;
+  background: #374151;
+  transition: all 0.3s ease;
+}
+
+.hamburger-btn:hover .hamburger-line {
+  background: #3b82f6;
+}
+
+/* 통합된 전체 메뉴 드롭다운 */
+.unified-menu-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  width: 100vw;
+  max-width: 900px;
+  z-index: 1000;
+  animation: dropdownFadeIn 0.2s ease;
+  padding: 24px;
+}
+
+.unified-menu-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 0;
+}
+
+.unified-menu-category {
+  flex: 1;
+  padding: 0 20px;
+  border-right: 1px solid #e5e7eb;
+}
+
+.unified-menu-category:last-child {
+  border-right: none;
+}
+
+.unified-category-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #3b82f6;
+  margin-bottom: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.unified-category-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.unified-category-item {
+  padding: 10px 16px;
+  color: #374151;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.unified-category-item:hover {
+  background: #f8fafc;
+  color: #3b82f6;
+}
+
+/* 메인 네비게이션 */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 15px 20px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: #3b82f6;
+  background: #f8fafc;
+}
+
+.dropdown-arrow {
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+}
+
+.nav-item:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+/* 드롭다운 메뉴 */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 160px;
+  z-index: 1000;
+  animation: dropdownFadeIn 0.2s ease;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-link {
+  display: block;
+  padding: 12px 16px;
+  color: #374151;
+  text-decoration: none;
+  font-size: 13px;
+  border-bottom: 1px solid #f3f4f6;
+  transition: all 0.2s ease;
+}
+
+.dropdown-link:last-child {
+  border-bottom: none;
+}
+
+.dropdown-link:hover {
+  background: #f8fafc;
+  color: #3b82f6;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+  }
+  
+  .menu-toggle {
+    margin-right: auto;
+  }
+}

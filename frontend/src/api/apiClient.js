@@ -29,4 +29,24 @@ apiClient.interceptors.request.use(
   }
 );
 
+// 응답 인터셉터 (Response Interceptor)
+// 모든 API 응답을 받은 후에 이 코드가 실행됩니다.
+apiClient.interceptors.response.use(
+  (response) => {
+    // 정상 응답인 경우 그대로 반환
+    return response;
+  },
+  (error) => {
+    // 401 Unauthorized 에러인 경우 토큰 제거
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('authToken');
+      // 로그인 페이지로 리다이렉트 (현재 페이지가 로그인 페이지가 아닌 경우에만)
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default apiClient;

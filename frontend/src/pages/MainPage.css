@@ -1,102 +1,189 @@
-/* src/pages/MainPage.css */
-.main-page-container {
+/* MainPage.css - 깔끔하게 정리된 스타일 */
+
+/* 기본 컨테이너 스타일 */
+.main-page {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: white;
+  min-height: 400px;
+}
+
+.sidebar {
+  max-width: 400px;
   width: 100%;
 }
 
-.search-section {
-  background-color: #e9f4ff; /* 연한 파란색 배경 */
-  padding: 40px 20px;
+/* 박스 스타일 */
+.content-box {
+  border: 1px solid #e9ecef;
   border-radius: 8px;
-  margin-bottom: 40px;
-}
-
-.search-box {
-  max-width: 700px;
-  margin: 0 auto;
-  display: flex;
+  padding: 20px;
   background-color: white;
-  border: 2px solid var(--primary-color);
-  border-radius: 30px;
-  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.search-dropdown {
-  border: none;
-  padding: 0 15px;
-  background-color: transparent;
-  font-size: 1rem;
-  color: #555;
+.box-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 16px;
 }
 
-.search-input {
-  flex-grow: 1;
-  border: none;
-  padding: 15px;
-  font-size: 1rem;
+/* 로그인 폼 스타일 */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.search-input:focus {
+
+.login-input {
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.login-input:focus {
   outline: none;
+  border-color: #4A90E2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
 }
 
-.search-button {
-  background-color: var(--primary-color);
+.login-button {
+  padding: 12px;
+  background-color: #4A90E2;
+  color: white;
   border: none;
-  padding: 0 20px;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
 }
 
-.quick-links {
-  max-width: 700px;
-  margin: 15px auto 0;
-  color: var(--text-secondary-color);
-  font-size: 0.9rem;
+.login-button:hover {
+  background-color: #3a7bc8;
 }
 
-.quick-links a {
-  margin-left: 10px;
-  color: var(--text-secondary-color);
+.login-links {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+  font-size: 12px;
 }
-.quick-links a:hover {
+
+.login-links a {
+  color: #4A90E2;
+  text-decoration: none;
+}
+
+.login-links a:hover {
   text-decoration: underline;
 }
 
-
-.services-section {
-  margin-top: 50px;
-}
-
-.section-title {
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 20px;
-}
-
-.service-card {
-  background-color: white;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 20px;
+/* 환영 메시지 스타일 */
+.welcome-container {
   text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 20px 0;
 }
 
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+.welcome-title {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
 }
 
-.service-icon {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
+.welcome-text {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: #6b7280;
 }
 
-.service-title {
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-button {
+  padding: 12px 15px;
+  background-color: #f8f9fa;
+  color: #374151;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
   font-weight: 500;
+  border: 1px solid #e9ecef;
+  transition: all 0.2s ease;
+  display: block;
+}
+
+.action-button:hover {
+  background-color: #e9ecef;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 10px;
+  }
+  
+  .sidebar {
+    max-width: 100%;
+  }
+  
+  .content-box {
+    padding: 15px;
+  }
+  
+  .login-input,
+  .login-button {
+    padding: 10px;
+  }
+  
+  .welcome-title {
+    font-size: 16px;
+  }
+  
+  .action-button {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
+
+/* 접근성 개선 */
+.login-input:focus,
+.login-button:focus,
+.action-button:focus {
+  outline: 2px solid #4A90E2;
+  outline-offset: 2px;
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content-box {
+  animation: fadeIn 0.3s ease-out;
 }
