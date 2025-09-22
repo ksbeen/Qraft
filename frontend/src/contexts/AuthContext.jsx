@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import apiClient from '../api/apiClient';
 
 const AuthContext = createContext();
 
@@ -14,39 +15,48 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
-  // 페이지 로드시 localStorage에서 로그인 상태 복원
+  // Load auth state from localStorage on mount
   useEffect(() => {
-    const savedLoginState = localStorage.getItem('isLoggedIn');
+    const token = localStorage.getItem('authToken');
     const savedUser = localStorage.getItem('user');
     
-    if (savedLoginState === 'true' && savedUser) {
+    if (token && savedUser) {
       setIsLoggedIn(true);
       setUser(JSON.parse(savedUser));
     }
   }, []);
 
-  const login = (username, password) => {
-    // 간단한 로그인 검증 (실제로는 API 호출)
-    if (username && password) {
-      const userData = { username };
+  const login = async (email, password) => {
+    try {
+      // 실제 백엔드 API 호출
+      const response = await apiClient.post('/api/users/login', {
+        email,
+        password
+      });
+      
+      const { token } = response.data;
+      const userData = { email };
+      
+      // JWT 토큰과 사용자 정보 저장
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('user', JSON.stringify(userData));
+      
       setIsLoggedIn(true);
       setUser(userData);
       
-      // localStorage에 상태 저장
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('user', JSON.stringify(userData));
-      
-      return true;
+      return { success: true };
+    } catch (error) {
+      console.error('Login failed:', error);
+      return { success: false, error: error.response?.data?.message || '로그인에 실패했습니다.' };
     }
-    return false;
   };
 
   const logout = () => {
     setIsLoggedIn(false);
     setUser(null);
     
-    // localStorage에서 상태 제거
-    localStorage.removeItem('isLoggedIn');
+    // Clear all auth data
+    localStorage.removeItem('authToken');
     localStorage.removeItem('user');
   };
 

@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Header from '../components/Header';
-import Navigation from '../components/Navigation';
-import { useAuth } from '../contexts/AuthContext';
-import './MainPage.css';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Header from "../components/Header";
+import Navigation from "../components/Navigation";
+import { useAuth } from "../contexts/AuthContext";
+import "./MainPage.css";
 
 function MainPage() {
-  const { isLoggedIn, login } = useAuth();
-  const [loginData, setLoginData] = useState({
-    username: '',
-    password: ''
-  });
+  const { isLoggedIn, login, logout } = useAuth();
+  const [activeTab, setActiveTab] = useState("community");
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
 
-  const handleInputChange = (e) => {
+  const handleLoginInputChange = (e) => {
     const { name, value } = e.target;
     setLoginData(prev => ({
       ...prev,
@@ -20,12 +18,27 @@ function MainPage() {
     }));
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const success = login(loginData.username, loginData.password);
-    if (success) {
-      setLoginData({ username: '', password: '' });
+    
+    if (!loginData.email || !loginData.password) {
+      alert("이메일과 비밀번호를 입력해주세요.");
+      return;
     }
+
+    const result = await login(loginData.email, loginData.password);
+    if (result.success) {
+      setLoginData({ email: "", password: "" });
+      alert("로그인에 성공했습니다!");
+    } else {
+      alert(result.error);
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    setLoginData({ email: "", password: "" });
+    alert("로그아웃되었습니다.");
   };
 
   const renderWelcomeContent = () => (
@@ -64,11 +77,11 @@ function MainPage() {
       
       <form onSubmit={handleLogin} className="login-form">
         <input 
-          type="text" 
-          name="username"
-          placeholder="아이디" 
-          value={loginData.username}
-          onChange={handleInputChange}
+          type="email" 
+          name="email"
+          placeholder="이메일" 
+          value={loginData.email}
+          onChange={handleLoginInputChange}
           className="login-input"
           required
         />
@@ -77,7 +90,7 @@ function MainPage() {
           name="password"
           placeholder="비밀번호" 
           value={loginData.password}
-          onChange={handleInputChange}
+          onChange={handleLoginInputChange}
           className="login-input"
           required
         />
