@@ -35,7 +35,13 @@ export const AuthProvider = ({ children }) => {
       });
       
       const { token } = response.data;
-      const userData = { email };
+      
+      // JWT 토큰에서 사용자 정보 추출
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const userData = { 
+        email: payload.sub || email, // JWT의 subject가 이메일
+        nickname: payload.nickname // JWT에서 닉네임 추출
+      };
       
       // JWT 토큰과 사용자 정보 저장
       localStorage.setItem('authToken', token);

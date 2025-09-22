@@ -2,6 +2,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../api/apiClient';
+import Header from '../components/Header';
+import Navigation from '../components/Navigation';
+import '../pages/MainPage.css';
 
 function InterviewSessionPage() {
   const { id } = useParams();
@@ -97,41 +100,68 @@ function InterviewSessionPage() {
 
   if (status === 'ready') {
     return (
-      <div style={{textAlign: 'center', marginTop: '50px'}}>
-        <h1 className="page-title">{interviewSet?.name}</h1>
-        <p style={{margin: '20px 0 30px', color: 'var(--text-secondary-color)'}}>
-          면접을 시작할 준비가 되면 아래 버튼을 눌러주세요.
-        </p>
-        <button className="form-button" style={{width: '200px'}} onClick={handleStartInterview}>면접 시작</button>
+      <div className="main-page">
+        <Header />
+        <Navigation />
+        
+        <div className="main-container">
+          <div className="content-area">
+            <div style={{textAlign: 'center', marginTop: '50px'}}>
+              <h1 className="page-title">{interviewSet?.name}</h1>
+              <p style={{margin: '20px 0 30px', color: 'var(--text-secondary-color)'}}>
+                면접을 시작할 준비가 되면 아래 버튼을 눌러주세요.
+              </p>
+              <button className="form-button" style={{width: '200px'}} onClick={handleStartInterview}>면접 시작</button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (status === 'finished') {
     return (
-      <div style={{textAlign: 'center', marginTop: '50px'}}>
-        <h1 className="page-title">면접이 종료되었습니다.</h1>
-        <p style={{margin: '20px 0 30px', color: 'var(--text-secondary-color)'}}>
-          수고하셨습니다. 면접 기록이 저장되었습니다.
-        </p>
-        <button className="form-button" style={{width: '250px'}} onClick={() => navigate('/my-logs')}>내 기록 확인하기</button>
+      <div className="main-page">
+        <Header />
+        <Navigation />
+        
+        <div className="main-container">
+          <div className="content-area">
+            <div style={{textAlign: 'center', marginTop: '50px'}}>
+              <h1 className="page-title">면접이 종료되었습니다.</h1>
+              <p style={{margin: '20px 0 30px', color: 'var(--text-secondary-color)'}}>
+                수고하셨습니다. 면접 기록이 저장되었습니다.
+              </p>
+              <button className="form-button" style={{width: '250px'}} onClick={() => navigate('/my-logs')}>내 기록 확인하기</button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="session-container">
-      <h1 className="page-title">{interviewSet.name}</h1>
-      <video ref={videoRef} autoPlay playsInline muted className="session-video"/>
-      <div className="question-box">
-        <p className="question-number">질문 {currentQuestionIndex + 1} / {questions.length}</p>
-        <p className="question-content">
-          {questions.length > 0 ? questions[currentQuestionIndex].content : '질문이 없습니다.'}
-        </p>
-      </div>
-      <div className="session-actions">
-        <button className="primary" onClick={handleNextQuestion}>다음 질문</button>
-        <button className="secondary" onClick={handleEndInterview}>면접 종료</button>
+    <div className="main-page">
+      <Header />
+      <Navigation />
+      
+      <div className="main-container">
+        <div className="content-area">
+          <div className="session-container">
+            <h1 className="page-title">{interviewSet.name}</h1>
+            <video ref={videoRef} autoPlay playsInline muted className="session-video"/>
+            <div className="question-box">
+              <p className="question-number">질문 {currentQuestionIndex + 1} / {questions.length}</p>
+              <p className="question-content">
+                {questions.length > 0 ? questions[currentQuestionIndex].content : '질문이 없습니다.'}
+              </p>
+            </div>
+            <div className="session-actions">
+              <button className="primary" onClick={handleNextQuestion}>다음 질문</button>
+              <button className="secondary" onClick={handleEndInterview}>면접 종료</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

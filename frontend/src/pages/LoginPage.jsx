@@ -2,6 +2,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../api/apiClient';
+import Header from '../components/Header';
+import Navigation from '../components/Navigation';
+import '../pages/MainPage.css';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -25,19 +28,28 @@ function LoginPage() {
   };
 
   return (
-    <div className="form-container">
-      <h2 className="form-title">로그인</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">이메일 주소</label>
-          <input type="email" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+    <div className="main-page">
+      <Header />
+      <Navigation />
+      
+      <div className="main-container">
+        <div className="content-area">
+          <div className="form-container">
+            <h2 className="form-title">로그인</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="email">이메일 주소</label>
+                <input type="email" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">비밀번호</label>
+                <input type="password" id="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+              </div>
+              <button type="submit" className="form-button">로그인</button>
+            </form>
+          </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">비밀번호</label>
-          <input type="password" id="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <button type="submit" className="form-button">로그인</button>
-      </form>
+      </div>
     </div>
   );
 }

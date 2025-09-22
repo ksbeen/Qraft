@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 function Header() {
@@ -10,7 +11,9 @@ function Header() {
         {/* 로고 */}
         <div className="logo-section">
           <h1 className="logo">
-            <span className="logo-qraft">Qraft</span>
+            <Link to="/" className="logo-link">
+              <span className="logo-qraft">Qraft</span>
+            </Link>
           </h1>
         </div>
 

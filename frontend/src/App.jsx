@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import MainPage from './pages/MainPage';
 import SignUpPage from './pages/SignUpPage';
-import LoginPage from './pages/LoginPage';
 import PostListPage from './pages/PostListPage';
 import PostDetailPage from './pages/PostDetailPage';
 import NewPostPage from './pages/NewPostPage';
@@ -18,7 +17,6 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LoginPage />} />
         <Route path="/posts" element={<PostListPage />} />
         <Route path="/posts/new" element={<NewPostPage />} />
         <Route path="/posts/:id" element={<PostDetailPage />} />

@@ -6,7 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 import "./MainPage.css";
 
 function MainPage() {
-  const { isLoggedIn, login, logout } = useAuth();
+  const { isLoggedIn, login, logout, user } = useAuth();
   const [activeTab, setActiveTab] = useState("community");
   const [loginData, setLoginData] = useState({ email: "", password: "" });
 
@@ -69,12 +69,7 @@ function MainPage() {
   );
 
   const renderLoginForm = () => (
-    <div className="content-box">
-      <div className="box-header">
-        <span>👤</span>
-        <span>게시판 로그인</span>
-      </div>
-      
+    <div className="profile-card">
       <form onSubmit={handleLogin} className="login-form">
         <input 
           type="email" 
@@ -100,9 +95,41 @@ function MainPage() {
       </form>
       
       <div className="login-links">
-        <Link to="/signup">회원가입</Link>
-        <span style={{ color: '#9ca3af' }}>|</span>
-        <Link to="/find-password">비밀번호 찾기</Link>
+        <Link to="/find-id" className="login-link">아이디 찾기</Link>
+        <span className="login-divider">|</span>
+        <Link to="/find-password" className="login-link">비밀번호 찾기</Link>
+        <span className="login-divider">|</span>
+        <Link to="/signup" className="login-link">회원가입</Link>
+      </div>
+    </div>
+  );
+
+  const renderProfileCard = () => (
+    <div className="profile-card">
+      <div className="profile-header">
+        <div className="profile-main">
+          <div className="profile-avatar">
+            <div className="avatar-circle">
+              <span className="avatar-icon">👤</span>
+            </div>
+            <div className="avatar-settings">⚙️</div>
+          </div>
+          
+        <div className="profile-details">
+          <div className="profile-name-section">
+            <span className="profile-nickname">{user?.nickname}</span>
+            <div className="profile-id-badge">
+              <span>Qraft ID 🔒</span>
+            </div>
+            <button onClick={handleLogout} className="logout-button">
+              로그아웃 ↗
+            </button>
+          </div>
+          <div className="profile-email">{user?.email}</div>
+        </div>          <button onClick={handleLogout} className="logout-button">
+            로그아웃 ↗
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -113,8 +140,12 @@ function MainPage() {
       <Navigation />
       
       <div className="main-container">
-        <div className="sidebar">
-          {isLoggedIn ? renderWelcomeContent() : renderLoginForm()}
+        <div className="content-area">
+          {/* 여기에 메인 콘텐츠가 들어갈 예정 */}
+        </div>
+        
+        <div className="profile-sidebar">
+          {isLoggedIn ? renderProfileCard() : renderLoginForm()}
         </div>
       </div>
     </div>

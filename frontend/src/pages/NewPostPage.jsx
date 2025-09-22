@@ -2,6 +2,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../api/apiClient';
+import Header from '../components/Header';
+import Navigation from '../components/Navigation';
+import '../pages/MainPage.css';
 
 function NewPostPage() {
   const [title, setTitle] = useState('');
@@ -22,19 +25,28 @@ function NewPostPage() {
   };
 
   return (
-    <div className="form-container" style={{maxWidth: '800px'}}>
-      <h2 className="form-title">새 게시글 작성</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="title">제목</label>
-          <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+    <div className="main-page">
+      <Header />
+      <Navigation />
+      
+      <div className="main-container">
+        <div className="content-area">
+          <div className="form-container" style={{maxWidth: '800px'}}>
+            <h2 className="form-title">새 게시글 작성</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="title">제목</label>
+                <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="content">내용</label>
+                <textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} rows="15" required />
+              </div>
+              <button type="submit" className="form-button">등록</button>
+            </form>
+          </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="content">내용</label>
-          <textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} rows="15" required />
-        </div>
-        <button type="submit" className="form-button">등록</button>
-      </form>
+      </div>
     </div>
   );
 }
