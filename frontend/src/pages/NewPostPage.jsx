@@ -9,11 +9,12 @@ import '../pages/MainPage.css';
 function NewPostPage() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [boardType, setBoardType] = useState('FREE');
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const requestData = { title, content, boardType: 'FREE' };
+    const requestData = { title, content, boardType };
     try {
       await apiClient.post('/api/posts', requestData);
       alert('게시글이 성공적으로 등록되었습니다.');
@@ -34,6 +35,18 @@ function NewPostPage() {
           <div className="form-container" style={{maxWidth: '800px'}}>
             <h2 className="form-title">새 게시글 작성</h2>
             <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="boardType">카테고리</label>
+                <select 
+                  id="boardType" 
+                  value={boardType} 
+                  onChange={(e) => setBoardType(e.target.value)}
+                  required
+                >
+                  <option value="FREE">자유게시판</option>
+                  <option value="INFO">정보게시판</option>
+                </select>
+              </div>
               <div className="form-group">
                 <label htmlFor="title">제목</label>
                 <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />

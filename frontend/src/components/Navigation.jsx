@@ -25,7 +25,7 @@ function Navigation() {
       name: '커뮤니티',
       submenu: [
         { name: '커뮤니티', path: '/posts' },
-        { name: '면접 후기', path: '/posts/reviews' }
+        { name: '면접 후기', path: '/interview-reviews' }
       ]
     },
     {

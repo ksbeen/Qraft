@@ -1,6 +1,9 @@
 package com.example.Qraft.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Qraft.dto.LoginRequestDto;
 import com.example.Qraft.dto.TokenDto;
+import com.example.Qraft.dto.UserResponseDto;
 import com.example.Qraft.dto.UserSignUpRequestDto;
 import com.example.Qraft.service.UserService;
 
@@ -23,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
     // 비즈니스 로직을 처리하는 UserService를 주입받습니다.
@@ -56,5 +61,17 @@ public class UserController {
         String token = userService.login(requestDto);
         // 2. 받은 JWT를 TokenDto로 감싸서 HTTP 응답 본문에 담아 보냅니다.
         return ResponseEntity.ok(new TokenDto(token));
+    }
+
+    /**
+     * 현재 로그인한 사용자 정보 조회 API (/api/users/me)
+     * @param authentication Spring Security에서 제공하는 인증 정보
+     * @return 현재 사용자의 정보를 담은 DTO
+     */
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDto> getCurrentUser(Authentication authentication) {
+        // 인증된 사용자의 이메일을 통해 사용자 정보를 조회합니다.
+        UserResponseDto userResponse = userService.getCurrentUser(authentication.getName());
+        return ResponseEntity.ok(userResponse);
     }
 }

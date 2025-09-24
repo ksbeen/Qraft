@@ -48,19 +48,16 @@ public class SecurityConfig {
         // JWT 기반의 stateless 인증을 사용하므로, 세션에 의존하는 CSRF 보호는 필요하지 않습니다.
         http.csrf(csrf -> csrf.disable());
 
+        // CORS 설정 활성화
+        http.cors(cors -> {});
+
         // Spring Security가 세션을 생성하거나 사용하지 않도록 설정합니다. (STATELESS)
         // JWT 인증 방식은 서버가 상태를 저장하지 않는 것을 전제로 하므로 필수적인 설정입니다.
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.authorizeHttpRequests(auth -> auth
-            // OPTIONS 메소드에 대한 요청은 인증 없이 모두 허용합니다. (Preflight 요청 처리)
-            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            // '/uploads/' 경로의 모든 GET 요청은 인증 없이 허용합니다.
-            .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
-            // '/api/users/signup' 과 '/api/users/login' 경로는 인증 없이 접근을 허용합니다.
-            .requestMatchers("/api/users/signup", "/api/users/login").permitAll()
-            // 그 외의 모든 요청은 반드시 인증(로그인)을 거쳐야 합니다.
-            .anyRequest().authenticated()
+            // 모든 요청을 허용합니다 (임시 설정)
+            .anyRequest().permitAll()
         );
 
         // 직접 만든 JwtAuthenticationFilter를 Spring Security의 필터 체인에 추가합니다.

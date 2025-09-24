@@ -48,6 +48,8 @@ public class JwtTokenProvider {
 
         return Jwts.builder()
                 .subject(subject) // 토큰의 주제 설정
+                .claim("userId", user.getId()) // 사용자 ID 추가
+                .claim("nickname", user.getNickname()) // 닉네임 정보 추가
                 .issuedAt(now) // 토큰 발행 시간
                 .expiration(validity) // 토큰 만료 시간
                 .signWith(key) // 비밀 키를 사용하여 서명

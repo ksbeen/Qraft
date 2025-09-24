@@ -73,6 +73,7 @@
 .post-detail-actions {
   margin-bottom: 20px;
   display: flex;
+  justify-content: flex-end;
   gap: 10px;
 }
 
@@ -87,6 +88,7 @@
 .action-button.delete {
   border-color: #d32f2f;
   color: #d32f2f;
+  background: white;
 }
 
 .post-detail-content {

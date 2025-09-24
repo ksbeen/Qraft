@@ -28,6 +28,39 @@ function PostListPage() {
     }
   };
 
+// 카테고리 매핑 함수
+  const getCategoryInfo = (boardType) => {
+    switch(boardType) {
+      case 'INFO':
+        return { text: '정보', className: 'info' };
+      case 'FREE':
+        return { text: '자유', className: 'general' };
+      default:
+        return { text: '일반', className: 'general' };
+    }
+  };
+
+  // 날짜 포맷 함수
+  const formatDate = (dateString) => {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 1) {
+      return date.toLocaleDateString('ko-KR', {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } else {
+      return date.toLocaleDateString('ko-KR', {
+        month: '2-digit',
+        day: '2-digit'
+      });
+    }
+  };
+
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -67,15 +100,47 @@ function PostListPage() {
           )}
           
           {!loading && !error && posts.length > 0 && (
-            <div>
-              {posts.map((post) => (
-                <Link key={post.id} to={`/posts/${post.id}`}>
-                  <div className="post-card">
-                    <h3 className="post-card-title">{post.title}</h3>
-                    <p className="post-card-author">작성자: {post.authorNickname}</p>
-                  </div>
-                </Link>
-              ))}
+            <div className="community-board">
+              <div className="board-header">
+                <div className="board-category">분류</div>
+                <div className="board-title">제목</div>
+                <div className="board-author">글쓴이</div>
+                <div className="board-date">날짜</div>
+                <div className="board-views">조회</div>
+                <div className="board-likes">추천</div>
+              </div>
+              
+              <div className="board-content">
+                {posts.map((post) => {
+                  const categoryInfo = getCategoryInfo(post.boardType);
+                  return (
+                    <Link key={post.id} to={`/posts/${post.id}`} className="board-row">
+                      <div className="board-category">
+                        <span className={`category-tag ${categoryInfo.className}`}>
+                          {categoryInfo.text}
+                        </span>
+                      </div>
+                      <div className="board-title">
+                        <span className="post-title">{post.title}</span>
+                        {post.hasAttachment && <span className="attachment-icon">📎</span>}
+                      </div>
+                      <div className="board-author">
+                        <div className="author-info">
+                          <div className="author-avatar">
+                            <span className="avatar-icon">👤</span>
+                          </div>
+                          <span className="author-name">{post.authorNickname}</span>
+                        </div>
+                      </div>
+                      <div className="board-date">
+                        {formatDate(post.createdAt)}
+                      </div>
+                      <div className="board-views">{post.views || 0}</div>
+                      <div className="board-likes">{post.recommendCount || 0}</div>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>

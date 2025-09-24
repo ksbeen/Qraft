@@ -39,9 +39,9 @@ function Header() {
         {/* 광고 배너 공간 */}
         <div className="ad-banner">
           <div className="ad-content">
-            <span className="ad-highlight">참시 이틀 차 미리고 공개!</span>
-            <span className="ad-brand">kakao</span>
-            <div className="ad-subtitle">[카카오그룹] 2026 신입직군 공개</div>
+            <span className="ad-highlight">배너 테스트</span>
+            <span className="ad-brand">Qraft</span>
+            <div className="ad-subtitle">[테스트] 테스트</div>
           </div>
         </div>
       </div>

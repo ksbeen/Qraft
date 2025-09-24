@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
@@ -59,6 +59,9 @@ function MainPage() {
         <div className="action-buttons">
           <Link to="/posts" className="action-button">
             📝 게시판 보기
+          </Link>
+          <Link to="/interview-reviews" className="action-button">
+            💼 면접 후기
           </Link>
           <Link to="/interview" className="action-button">
             🎤 면접 연습

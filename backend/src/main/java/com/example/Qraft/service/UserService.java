@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.Qraft.dto.LoginRequestDto;
+import com.example.Qraft.dto.UserResponseDto;
 import com.example.Qraft.entity.User;
 import com.example.Qraft.jwt.JwtTokenProvider;
 import com.example.Qraft.repository.UserRepository;
@@ -71,5 +72,18 @@ public class UserService {
 
         // 3. 모든 인증 절차를 통과하면, 해당 사용자를 위한 JWT를 생성하여 반환합니다.
         return jwtTokenProvider.createToken(user);
+    }
+
+    /**
+     * 현재 로그인한 사용자의 정보를 조회하는 메소드
+     * @param email 인증된 사용자의 이메일
+     * @return 사용자 정보를 담은 DTO
+     */
+    @Transactional(readOnly = true)
+    public UserResponseDto getCurrentUser(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        
+        return new UserResponseDto(user.getId(), user.getEmail(), user.getNickname());
     }
 }
